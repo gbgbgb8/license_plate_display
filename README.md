@@ -1,6 +1,8 @@
-Galactic Unicorn License Plate Display for Uber/Lyft Drivers
+# Galactic Unicorn License Plate Display for Uber/Lyft Drivers
 
 This project uses the Pimoroni Galactic Unicorn LED display and a Raspberry Pi Pico W to display a driver's license plate number with a blinking, colorful background. This can help Uber and Lyft riders easily identify their driver's vehicle.
+
+![screenshot](IMG_3663.jpeg)
 
 Features
 
