@@ -1,70 +1,48 @@
-# Galactic Unicorn License Plate Display for Uber/Lyft Drivers
+# License Plate Display for Rideshare Drivers
 
-This project uses the Pimoroni Galactic Unicorn LED display and a Raspberry Pi Pico W to display a driver's license plate number with a blinking, colorful background. This can help Uber and Lyft riders easily identify their driver's vehicle.
+This project uses the [Pimoroni Galactic Unicorn](https://shop.pimoroni.com/products/space-unicorns?variant=40842033561683) - an all-in-one LED matrix display with an integrated Raspberry Pi Pico W. It creates an eye-catching display for rideshare drivers to show their license plate number. The large, outlined text and colorful blinking background make it easy for passengers to spot their driver's vehicle.
 
-![screenshot](IMG_3663.jpeg)
+![Project Photo](IMG_3663.jpeg)
 
-Features
+## Features
 
-Displays your license plate number in large, outlined text for easy visibility.
+- Displays license plate number in clear, high-visibility text
+- Blinking background in random colors to stand out
+- Customize background and text color with button presses  
+- Adjust display brightness to suit conditions
+- Easy to personalize text in the code
 
-The background blinks with random colors, making your vehicle stand out.
+## Required Hardware
 
-You can randomize the background color using the A button on the Galactic Unicorn.
+- [Pimoroni Galactic Unicorn](https://shop.pimoroni.com/products/space-unicorns?variant=40842033561683) with integrated Pico W 
 
-You can randomize the text color using the B button.
+## Setup Instructions
 
-Adjust the brightness of the display using the LUX +/- buttons.
+1. Update the `text` variable in `main.py` with your license plate number
+2. Flash the `main.py` file to your Galactic Unicorn's Pico W
+3. Power up the Galactic Unicorn via USB or battery pack
 
+## Operation 
 
-Prerequisites
+The display will light up showing your plate number over the blinking background.
 
-Pimoroni Galactic Unicorn LED display
+- Press button A to randomize the background color
+- Press button B to randomize the text color
+- Use the LUX + and - buttons to brighten or dim the display
 
-Raspberry Pi Pico W
+## Customization Options
 
-MicroPython firmware for the Raspberry Pi Pico W
+Several aspects can be easily customized by editing the code:
 
+- `text`: Set to your license plate number 
+- `color`: Change the initial background color
+- Outline color: Edit the pen color in `outline_text()`  
+- Animation speed: Adjust the `time.sleep()` duration in the main loop
 
-Setup
+## Important Notes
 
-Edit the text variable in the code to your license plate number.
+- Check local regulations and rideshare company policies before using this device
+- Mount securely and ensure the display doesn't obstruct views or distract drivers
+- The project is open-source under the MIT License - feel free to adapt the code
 
-Upload the main.py file to your Raspberry Pi Pico W.
-
-Connect the Galactic Unicorn to your Raspberry Pi Pico W.
-
-
-Usage
-Power on your Galactic Unicorn with the Raspberry Pi Pico W.
-
-Your license plate number will be displayed with a blinking, colorful background.
-
-Press the A button to randomize the background color.
-
-Press the B button to randomize the text color.
-
-Use the LUX +/- buttons to adjust the brightness.
-
-Customization
-
-You can customize the code to change the following:
-
-
-Text: Edit the text variable to your license plate number.
-
-Initial Background Color: Change the color variable in the Blinking background settings section.
-
-Outline Color: Change the pen color in the outline_text() function.
-
-Animation Speed: Adjust the time.sleep() value in the nested loop within the while True loop.
-
-
-License
-
-This project is open-source and available under the MIT License. Feel free to modify and use the code for your own purposes.
-
-
-
-Disclaimer
-Please check with your local regulations and ridesharing company policies before using this device in your vehicle. Ensure that the display does not obstruct your view or distract other drivers.
+I hope this device helps your passengers find you quickly and easily. Happy ridesharing!
