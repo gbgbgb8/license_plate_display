@@ -98,18 +98,18 @@ def outline_text(text, x, y):
 
 setup()
 
-gu.set_brightness(0.5)
+gu.set_brightness(0.3)
 
 while True:
     current_time = time.ticks_ms()
 
     if current_time - last_button_press_time >= BUTTON_DELAY:
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
-            gu.adjust_brightness(+0.01)
+            gu.adjust_brightness(+0.1)
             last_button_press_time = current_time
 
         if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
-            gu.adjust_brightness(-0.01)
+            gu.adjust_brightness(-0.1)
             last_button_press_time = current_time
 
         button_pressed = pressed()
