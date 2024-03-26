@@ -10,7 +10,7 @@ width = GalacticUnicorn.WIDTH
 height = GalacticUnicorn.HEIGHT
 
 # Text settings
-texts = ["3 SAM 123", "Uber  Lyft", "3 SAM 123", "Lyft  Uber"]
+texts = ["3 SAM 123", "Uber Lyft", "3 SAM 123", "Lyft Uber"]
 text_durations = [4, 1, 4, 1]  # Durations in seconds for each text
 text_color = graphics.create_pen(255, 255, 255)  # Initial white text
 
@@ -24,6 +24,19 @@ age = [[0.0 for y in range(height)] for x in range(width)]
 
 current_text_index = 0
 text_start_time = time.ticks_ms()
+
+# Themed color schemes
+themed_color_schemes = {
+    "Spring": [((0, 255, 0), (255, 192, 203)), ((255, 255, 0), (0, 255, 127))],
+    "Summer": [((255, 165, 0), (0, 191, 255)), ((255, 215, 0), (255, 105, 180))],
+    "Autumn": [((255, 140, 0), (139, 69, 19)), ((255, 215, 0), (128, 0, 0))],
+    "Winter": [((224, 255, 255), (0, 0, 139)), ((255, 250, 250), (0, 0, 205))]
+}
+current_theme = "Spring"
+
+# Button debouncing settings
+last_button_press_time = 0
+BUTTON_DELAY = 500  # Adjust the delay as needed
 
 
 def setup():
@@ -63,6 +76,8 @@ def pressed():
         return GalacticUnicorn.SWITCH_A
     if gu.is_pressed(GalacticUnicorn.SWITCH_B):
         return GalacticUnicorn.SWITCH_B
+    if gu.is_pressed(GalacticUnicorn.SWITCH_C):
+        return GalacticUnicorn.SWITCH_C
     return None
 
 
@@ -86,22 +101,36 @@ setup()
 gu.set_brightness(0.5)
 
 while True:
-
-    if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
-        gu.adjust_brightness(+0.01)
-
-    if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
-        gu.adjust_brightness(-0.01)
-
-    button_pressed = pressed()
-
-    if button_pressed == GalacticUnicorn.SWITCH_A:
-        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
-    elif button_pressed == GalacticUnicorn.SWITCH_B:
-        text_color = graphics.create_pen(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
     current_time = time.ticks_ms()
+
+    if current_time - last_button_press_time >= BUTTON_DELAY:
+        if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_UP):
+            gu.adjust_brightness(+0.01)
+            last_button_press_time = current_time
+
+        if gu.is_pressed(GalacticUnicorn.SWITCH_BRIGHTNESS_DOWN):
+            gu.adjust_brightness(-0.01)
+            last_button_press_time = current_time
+
+        button_pressed = pressed()
+
+        if button_pressed == GalacticUnicorn.SWITCH_A:
+            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            last_button_press_time = current_time
+
+        elif button_pressed == GalacticUnicorn.SWITCH_B:
+            text_color = graphics.create_pen(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            last_button_press_time = current_time
+
+        elif button_pressed == GalacticUnicorn.SWITCH_C:
+            themes = list(themed_color_schemes.keys())
+            current_theme_index = themes.index(current_theme)
+            current_theme = themes[(current_theme_index + 1) % len(themes)]
+            color_scheme = random.choice(themed_color_schemes[current_theme])
+            text_color, color = color_scheme
+            text_color = graphics.create_pen(text_color[0], text_color[1], text_color[2])
+            last_button_press_time = current_time
+
     elapsed_time = time.ticks_diff(current_time, text_start_time) / 1000  # Convert to seconds
 
     if elapsed_time >= text_durations[current_text_index]:
@@ -117,11 +146,8 @@ while True:
     start = time.ticks_ms()
 
     draw_background()
-
     outline_text(current_text, text_x, text_y)
-
     gu.update(graphics)
-
     update_background()
 
     time.sleep(0.001)
